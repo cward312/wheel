@@ -1,0 +1,148 @@
+<html>
+
+<head>
+  <title>Wheel</title>
+    <link rel = "stylesheet" href = "through.css">
+  <style>
+  .rotated {
+      transform: rotate(90deg);
+      -ms-transform: rotate(90deg);
+      -moz-transform: rotate(90deg);
+      -webkit-transform: rotate(90deg);
+      -o-transform: rotate(90deg);
+    }
+  .img{
+        transition: all 0.5s ease;
+        height: 400px;
+        width: 400px;
+      }
+  </style>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script>
+  // 0 = Lose a turn -1 = bannkrupt
+  var values = [0, 800, 350, 450,700,300,
+                 600,5000,600,500,300,500,
+                 800,550,400,300,900,500,
+                 300,900,-1,600,400,300];
+
+  $(document).ready(function() {
+    var degrees = 0;
+    $('.img').click(function rotateMe(e) {
+      genNumber();
+      degrees += 90;
+      $('.img').css({
+          'transform': 'rotate(' + degrees + 'deg)',
+          '-ms-transform': 'rotate(' + degrees + 'deg)',
+          '-moz-transform': 'rotate(' + degrees + 'deg)',
+          '-webkit-transform': 'rotate(' + degrees + 'deg)',
+          '-o-transform': 'rotate(' + degrees + 'deg)'
+        });
+      })
+    });
+    var result = ["___","___","___","___"];
+    var money = 0;
+    var winnings = 0;
+    var list = ["l", "y", "n", "x"];
+var temp = 0;
+
+    function genNumber()
+    {
+
+    money = values[parseInt(values.length * Math.random())];
+    document.getElementById('winnings').innerHTML = "$" + money;
+    if(money == -1)
+    {
+      winnings = 0;
+      document.getElementById('winnings').innerHTML = "bankrupt!";
+      document.getElementById('total').innerHTML = winnings;
+    }
+    else if(money == 0)
+    {
+      winnings = 0;
+        document.getElementById('winnings').innerHTML = "lose a turn!";
+        document.getElementById('total').innerHTML = winnings;
+    }
+  }
+  function search()
+  {
+    //      0 1 2 3 4 5
+      count = 0;
+    var y = document.getElementById('ear').value;
+    for(var i = 0; i < list.length; i++)
+    {
+      if (y == list[i])
+      {
+        result[i] = y;
+        winnings = winnings + money;
+        count = count + 1;
+        temp = temp + 1;
+      }
+
+    }
+    stringy = "there are " + count + " " + y + "'s in the puzzle";
+      document.getElementById('end').innerHTML = stringy;
+
+      document.getElementById('puzzle').innerHTML =  result;
+      document.getElementById('total').innerHTML = "$" + winnings;
+      if(car() == true)
+      {
+
+         window.location.href = "next.html"
+      }
+}
+    function car()
+    {
+      if(temp == 4)
+      {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+function disp()
+{
+  document.getElementById('puzzle').innerHTML = result;
+  document.getElementById('total').innerHTML = winnings;
+
+}
+
+
+  </script>
+</head>
+
+<body onload = "disp()" style = "background-image: url(awesome.jpg)">
+
+<div class = "wow">
+    <img src = "awe.png" height = "150px" width = "700px">
+  </div>
+     <div class = "wow">
+<input id = "ear" type = "letter" placeholder = "ENTER GUESS">
+<input id = "oh" type = "button" value = "SUBMIT GUESS" onclick = "search()">
+</div>
+<br>
+<div class = "wow">
+SPIN RESULT:
+<span id = "winnings"></span>
+</div>
+<div class = "wow">
+PUZZLE:
+  <span id = "puzzle"></span>
+</div>
+<div class = "wow">
+TOTAL:
+<span id = "total"></span>
+</div>
+<div class = "wow">
+     <span id = "end"></span>
+  </div>
+<br>
+<div class = "wow">
+   <img class = "img" src = "wheel.png">
+</div>
+
+</body>
+
+</html>
